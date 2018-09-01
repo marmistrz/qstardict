@@ -36,9 +36,10 @@
   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <QtQuick>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
 
-#include <sailfishapp.h>
 #include "sidudictlib.h"
 
 int main(int argc, char *argv[])
@@ -54,17 +55,20 @@ int main(int argc, char *argv[])
 
     // return SailfishApp::main(argc, argv);
 
-    QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
-    QScopedPointer<QQuickView> view(SailfishApp::createView());
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QGuiApplication app(argc, argv);
+    QQmlApplicationEngine engine;
 
     SiduDictLib stardict;
-    view.data()->rootContext()->setContextProperty("starDictLib", &stardict);
-    view.data()->rootContext()->setContextProperty("entryListModel", stardict.m_suggestModel);
-    view.data()->rootContext()->setContextProperty("availableDictListModel", stardict.m_availableDicts);
-    QUrl qmlPath(SailfishApp::pathTo("qml/main.qml"));
-    view.data()->setSource(qmlPath);
+    engine.rootContext()->setContextProperty("starDictLib", &stardict);
+    engine.rootContext()->setContextProperty("entryListModel", stardict.m_suggestModel);
+    engine.rootContext()->setContextProperty("availableDictListModel", stardict.m_availableDicts);
+    engine.load(QUrl(QStringLiteral("qml/main.qml")));
+    //QUrl qmlPath(SailfishApp::pathTo("qml/main.qml"));
+    // view.data()->setSource(qmlPath);
 
-    view.data()->show();
-
-    return app->exec();
+    if (engine.rootObjects().isEmpty()) {
+        return -1;
+    }
+    return app.exec();
 }
