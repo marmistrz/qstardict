@@ -42,7 +42,7 @@
 ****************************************************************************************/
 
 import QtQuick 2.2
-import Sailfish.Silica 1.0
+import QtQuick.Controls 2.0
 
 Page {
     id: searchPage
@@ -50,7 +50,7 @@ Page {
     property bool keepSearchFieldFocus: true
     property int curIndex
 
-    allowedOrientations: defaultAllowedOrientations
+    //allowedOrientations: defaultAllowedOrientations
 
     Keys.onReturnPressed: {
         if (starDictLib.isFirstListItemTranslatable()) {
@@ -78,7 +78,7 @@ Page {
 
         width: searchPage.width
 
-        SearchField {
+        TextField {
             id: searchField
             width: parent.width
             inputMethodHints: Qt.ImhNoAutoUppercase
@@ -94,7 +94,7 @@ Page {
 
     Component {
         id: listViewComponent
-        SilicaListView {
+        ListView {
             id: listView
             model: entryListModel
             anchors.fill: parent
@@ -113,7 +113,7 @@ Page {
                 Component.onCompleted: headerContainer.parent = header
             }
 
-            PullDownMenu {
+            /*PullDownMenu { FIXME enable settings
                 MenuItem {
                     text: "About"
                     onClicked: {
@@ -142,10 +142,10 @@ Page {
                         pageStack.push(Qt.resolvedUrl("settings.qml"))
                     }
                 }
-            }
+            }*/
 
-            delegate: ListItem{
-                contentHeight: Theme.itemSizeMedium // two line delegate
+            delegate: MouseArea {
+                // contentHeight: Theme.itemSizeMedium // two line delegate
                 anchors.margins: Theme.paddingMedium
                 onClicked: {
                     var translation = starDictLib.getTranslation(entry, dict)
@@ -169,7 +169,7 @@ Page {
                 }
             }
 
-            VerticalScrollDecorator {}
+            // VerticalScrollDecorator {}
 
             Component.onCompleted: {
                 if (keepSearchFieldFocus) {

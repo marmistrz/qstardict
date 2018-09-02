@@ -1,8 +1,8 @@
 CONFIG += link_pkgconfig
 PKGCONFIG += glib-2.0
-LIBS += -lz -lquazip
+LIBS += -lz -lquazip5 -lstardict -L../plugins/stardict/
 
-QT += dbus qml quick
+QT += dbus qml quick widgets quickcontrols2
 
 INCLUDEPATH += ../plugins
 #QMAKE_LFLAGS += -Wl,-rpath,\\$${LITERAL_DOLLAR}$${LITERAL_DOLLAR}ORIGIN/../share/harbour-sidudict/lib
@@ -31,6 +31,7 @@ HEADERS  += logging.h \
          dictlistmodel.h \
          suggestmodel.h \
          entrydictitem.h \
-         downloadmanager.h
+         downloadmanager.h \
+        ../plugins/stardict/stardict.h
 
 OTHER_FILES += qml/*.qml qml/*.js

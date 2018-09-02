@@ -51,7 +51,7 @@
 
 #include "downloadmanager.h"
 #include "logging.h"
-#include "JlCompress.h"
+#include "quazip5/JlCompress.h"
 
 DownloadManager::DownloadManager()
 {

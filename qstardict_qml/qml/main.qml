@@ -25,11 +25,10 @@
  ***************************************************************************/
 
 import QtQuick 2.2
-import Sailfish.Silica 1.0
+import QtQuick.Controls 2.0
 
-ApplicationWindow{
+ApplicationWindow {
     id: rootWindow
-    allowedOrientations: defaultAllowedOrientations
-    cover: Qt.resolvedUrl("cover.qml")
-    initialPage: Component { SearchPage{} }
+    visible: true
+    SearchPage {}
 }

@@ -25,7 +25,7 @@
  ***************************************************************************/
 
 import QtQuick 2.2
-import Sailfish.Silica 1.0
+import QtQuick.Controls 2.0
 
 Page {
     property string dictionaryName
@@ -34,7 +34,7 @@ Page {
 
     RemorsePopup { id: remorse }
 
-    SilicaFlickable {
+    Flickable {
         anchors.fill: parent
         contentHeight: column.height
         PullDownMenu{

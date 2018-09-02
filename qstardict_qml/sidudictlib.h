@@ -32,7 +32,7 @@
 
 #include "dictlistmodel.h"
 #include "suggestmodel.h"
-#include "lib/stardict.h"
+#include "stardict/stardict.h"
 #include "downloadmanager.h"
 
 class SiduDictLib:public QObject

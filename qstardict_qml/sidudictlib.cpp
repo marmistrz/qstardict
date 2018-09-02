@@ -33,12 +33,14 @@
 #include <QFile>
 #include <QtDBus/QtDBus>
 
+#include <iostream>
+
 #include <logging.h>
 
 #include "sidudictlib.h"
 #include "dictlistmodel.h"
 #include "suggestmodel.h"
-#include "lib/stardict.h"
+#include "stardict/stardict.h"
 #include "entrydictitem.h"
 #include "downloadmanager.h"
 
@@ -118,7 +120,7 @@ SiduDictLib::SiduDictLib()
         LOG() << m_sd->dictInfo(dict).name();
         LOG() << m_sd->dictInfo(dict).author();
         LOG() << m_sd->dictInfo(dict).description();
-        LOG() << m_sd->dictInfo(dict).ifoFileName();
+        // LOG() << m_sd->dictInfo(dict).ifoFileName();
         LOG() << m_sd->dictInfo(dict).wordsCount();
     }
 
@@ -172,7 +174,8 @@ void SiduDictLib::updateList(QString str){
 
         foreach (QString dict, m_sd->availableDicts()) {
             QList<EntryDictItem*> tmpWordList;
-            foreach(QString entry, m_sd->findWords(dict, str.simplified())){
+            // TODO originally it used findWords, check if findSimilarWords is ok too
+            foreach(QString entry, m_sd->findSimilarWords(dict, str.simplified())){
                 EntryDictItem *item =  new EntryDictItem(entry, dict);
                 tmpWordList.prepend(item);
             }
@@ -358,6 +361,10 @@ bool SiduDictLib::showNotification(const QString category,
 void SiduDictLib::deleteDictionary(QString dict)
 {
     IN;
+
+    std::cerr << "unimplemented\n";
+    exit(1);
+    /*
     QFileInfo ifoFile(m_sd->dictInfo(dict).ifoFileName());
 
     QDir ifoFileDir = ifoFile.absoluteDir();
@@ -408,4 +415,5 @@ void SiduDictLib::deleteDictionary(QString dict)
                          "");
     }
     updateDictCatalogue();
+    */
 }
